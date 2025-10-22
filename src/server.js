@@ -1,4 +1,3 @@
-const { connect } = require('http2');
 const app = require('./app');
 const connectDB = require('./config/db');
 require('dotenv').config();

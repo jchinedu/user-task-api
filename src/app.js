@@ -9,7 +9,7 @@ const userRoutes = require('./routes/user.routes');
 const taskRoutes = require('./routes/task.routes');
 
 
-const errorMiddleware = require('./middlewares/error.middleware');
+const errorMiddleware = require('./middleware/error.middleware');
 const e = require('cors');
 
 const app = express();
