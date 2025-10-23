@@ -47,7 +47,7 @@ Ensure you have the following software installed:
 
 Clone the repository:
 
-```bash
+bash
 git clone https://github.com/your-username/user-task-api.git
 Change into project directory:
 
@@ -74,10 +74,10 @@ Start the development server:
 bash
 Copy code
 npm run dev
-Database Setup
+### Database Setup
 Make sure your MongoDB instance is running and accessible via the MONGO_URI provided in .env.
 
-Usage
+### Usage
 Access the API endpoints at:
 http://localhost:4000/api/
 
@@ -311,4 +311,5 @@ License
 MIT License
 
 Contact
-Created by [Your Name] – feel free to reach out for questions or collaboration!
+Created by John Chinedu Egeonu – feel free to reach out for questions or collaboration!
+
