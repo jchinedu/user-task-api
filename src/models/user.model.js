@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Email is required'],
-    unique: true,
+    unique: true, 
     lowercase: true,
     trim: true
   },
@@ -30,11 +30,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.index({ email: 1 });
+
 
 module.exports = mongoose.model('User', userSchema);
