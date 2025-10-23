@@ -81,9 +81,9 @@ Make sure your MongoDB instance is running and accessible via the MONGO_URI prov
 Access the API endpoints at:
 http://localhost:4000/api/
 
-API Endpoints
-User Authentication
-Register a User
+### API Endpoints
+###User Authentication
+### Register a User
 Endpoint: /api/auth/register
 Method: POST
 Consumes: application/json
@@ -112,7 +112,7 @@ Copy code
   "accessToken": "jwt_access_token_here",
   "refreshToken": "jwt_refresh_token_here"
 }
-Login User
+### Login User
 Endpoint: /api/auth/login
 Method: POST
 Consumes: application/json
@@ -140,7 +140,7 @@ Copy code
   "accessToken": "jwt_access_token_here",
   "refreshToken": "jwt_refresh_token_here"
 }
-Refresh Access Token
+### Refresh Access Token
 Endpoint: /api/auth/refresh-token
 Method: POST
 Consumes: application/json
@@ -160,8 +160,8 @@ Copy code
 {
   "accessToken": "new_jwt_access_token_here"
 }
-User Endpoints
-Get User Profile
+### User Endpoints
+### Get User Profile
 Endpoint: /api/users/profile
 Method: GET
 Headers: Authorization: Bearer <access_token>
@@ -177,7 +177,7 @@ Copy code
   "email": "john@example.com",
   "createdAt": "2025-10-23T01:01:59.561Z"
 }
-Search Users by Name
+### Search Users by Name
 Endpoint: /api/users/search?name=john
 Method: GET
 Produces: application/json
@@ -196,8 +196,8 @@ Copy code
     }
   ]
 }
-Task Endpoints
-Create a Task
+### Task Endpoints
+### Create a Task
 Endpoint: /api/tasks
 Method: POST
 Headers: Authorization: Bearer <access_token>
@@ -224,7 +224,7 @@ Copy code
   "userId": "64f97e87a67dccea2c5e9a3a",
   "createdAt": "2025-10-23T05:30:00.000Z"
 }
-Get Tasks with Pagination and Filtering
+### Get Tasks with Pagination and Filtering
 Endpoint: /api/tasks
 Method: GET
 Headers: Authorization: Bearer <access_token>
@@ -257,7 +257,7 @@ Copy code
   "limit": 10,
   "total": 5
 }
-Update a Task
+### Update a Task
 Endpoint: /api/tasks/:id
 Method: PUT
 Headers: Authorization: Bearer <access_token>
@@ -283,7 +283,7 @@ Copy code
   "userId": "64f97e87a67dccea2c5e9a3a",
   "createdAt": "2025-10-23T05:30:00.000Z"
 }
-Delete a Task
+### Delete a Task
 Endpoint: /api/tasks/:id
 Method: DELETE
 Headers: Authorization: Bearer <access_token>
@@ -296,7 +296,7 @@ Copy code
 {
   "message": "Task deleted successfully"
 }
-Testing
+### Testing
 Use Postman or any API client to test the endpoints.
 
 Register or login to get access and refresh tokens.
@@ -307,9 +307,10 @@ Use the refresh token with /api/auth/refresh-token to get new access tokens.
 
 Test task creation, retrieval, updates, and deletion.
 
-License
+### License
 MIT License
 
-Contact
+### Contact
 Created by John Chinedu Egeonu – feel free to reach out for questions or collaboration!
+
 
