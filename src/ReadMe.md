@@ -1,66 +1,155 @@
-User Task Management API
+User Task API
+Table of Contents
+Introduction
+Setup
+Prerequisites
+Installation
+Database Setup
+Usage
+API Endpoints
+User Authentication
+Register a User
+Login User
+Refresh Access Token
+User Endpoints
+Get User Profile
+Search Users by Name
+Task Endpoints
+Create a Task
+Get Tasks with Pagination and Filtering
+Update a Task
+Delete a Task
+Testing
+License
+Contact
+Introduction
+The User Task API project provides a RESTful web service for managing users and their tasks. It supports secure user registration and login with JWT access and refresh tokens, allowing users to create, update, retrieve, and delete their tasks efficiently.
 
-A Node.js, Express, and MongoDB-based API for managing users and their tasks. Includes authentication and authorization features.
+Setup
+Prerequisites
+Ensure you have the following software installed:
 
-Features
+Node.js (v16 or later)
+MongoDB (Atlas or local)
+Postman or any API client for testing
+Installation
+Clone the repository:
 
-User registration and login using JSON Web Tokens (JWT)
+bash git clone https://github.com/your-username/user-task-api.git Change into project directory:
 
-Protected routes using middleware
+bash Copy code cd user-task-api Install dependencies:
 
-Full CRUD operations for tasks
+bash Copy code npm install Create a .env file in the root directory with the following:
 
-Task filtering, pagination, and ownership protection
+env Copy code PORT=4000 MONGO_URI=your_mongodb_connection_string JWT_SECRET=your_jwt_secret_key JWT_REFRESH_SECRET=your_jwt_refresh_secret_key JWT_EXPIRES_IN=1h REFRESH_TOKEN_EXPIRES_IN=7d Start the development server:
 
-Integration with MongoDB using Mongoose
+bash Copy code npm run dev
 
-Centralized error handling and request logging with Morgan
+Database Setup
+Make sure your MongoDB instance is running and accessible via the MONGO_URI provided in .env.
 
-Tech Stack
-
-Node.js
-
-Express.js
-
-MongoDB with Mongoose
-
-JWT for authentication
-
-Dotenv for environment configuration
+Usage
+Access the API endpoints at: http://localhost:4000/api/
 
 API Endpoints
+###User Authentication
 
-Auth
+Register a User
+Endpoint: /api/auth/register Method: POST Consumes: application/json Produces: application/json
 
-POST /api/auth/register – Register a new user
+Request:
 
-POST /api/auth/login – Log in and receive a JWT
+json Copy code { "name": "John Doe", "email": "john@example.com", "password": "password123" } Response:
 
-Users
+json Copy code { "message": "User registered successfully", "user": { "id": "64f97e87a67dccea2c5e9a3a", "name": "John Doe", "email": "john@example.com" }, "accessToken": "jwt_access_token_here", "refreshToken": "jwt_refresh_token_here" }
 
-GET /api/users/profile – Retrieve the logged-in user’s profile
+Login User
+Endpoint: /api/auth/login Method: POST Consumes: application/json Produces: application/json
 
-Tasks
+Request:
 
-POST /api/tasks – Create a new task
+json Copy code { "email": "john@example.com", "password": "password123" } Response:
 
-GET /api/tasks – Retrieve all tasks (supports filters and pagination)
+json Copy code { "message": "Login successful", "user": { "id": "64f97e87a67dccea2c5e9a3a", "name": "John Doe", "email": "john@example.com" }, "accessToken": "jwt_access_token_here", "refreshToken": "jwt_refresh_token_here" }
 
-PUT /api/tasks/:id – Update an existing task
+Refresh Access Token
+Endpoint: /api/auth/refresh-token Method: POST Consumes: application/json Produces: application/json
 
-DELETE /api/tasks/:id – Delete a task
+Request:
 
-Authentication
+json Copy code { "refreshToken": "jwt_refresh_token_here" } Response:
 
-Most endpoints require a valid JWT token.
-Include it in the request header as follows:
-Authorization: Bearer <your_token>
+json Copy code { "accessToken": "new_jwt_access_token_here" }
 
+User Endpoints
+Get User Profile
+Endpoint: /api/users/profile Method: GET Headers: Authorization: Bearer <access_token> Produces: application/json
 
+Response:
 
-Installation
+json Copy code { "id": "64f97e87a67dccea2c5e9a3a", "name": "John Doe", "email": "john@example.com", "createdAt": "2025-10-23T01:01:59.561Z" }
 
-```bash
-git clone https://github.com/jchinedu/user-task-api.git
-cd user-task-api
-npm install
+Search Users by Name
+Endpoint: /api/users/search?name=john Method: GET Produces: application/json
+
+Response:
+
+json Copy code { "users": [ { "id": "64f97e87a67dccea2c5e9a3a", "name": "John Doe", "email": "john@example.com", "createdAt": "2025-10-23T01:01:59.561Z" } ] }
+
+Task Endpoints
+Create a Task
+Endpoint: /api/tasks Method: POST Headers: Authorization: Bearer <access_token> Consumes: application/json Produces: application/json
+
+Request:
+
+json Copy code { "title": "Complete project", "description": "Finish the API by Friday" } Response:
+
+json Copy code { "id": "64fabc87a67dccea2c5e9a3b", "title": "Complete project", "description": "Finish the API by Friday", "status": "pending", "userId": "64f97e87a67dccea2c5e9a3a", "createdAt": "2025-10-23T05:30:00.000Z" }
+
+Get Tasks with Pagination and Filtering
+Endpoint: /api/tasks Method: GET Headers: Authorization: Bearer <access_token> Query Params:
+
+page (optional, default: 1)
+
+limit (optional, default: 10)
+
+status (optional, pending or done)
+
+Produces: application/json
+
+Response:
+
+json Copy code { "tasks": [ { "id": "64fabc87a67dccea2c5e9a3b", "title": "Complete project", "description": "Finish the API by Friday", "status": "pending", "userId": "64f97e87a67dccea2c5e9a3a", "createdAt": "2025-10-23T05:30:00.000Z" } ], "page": 1, "limit": 10, "total": 5 }
+
+Update a Task
+Endpoint: /api/tasks/:id Method: PUT Headers: Authorization: Bearer <access_token> Consumes: application/json Produces: application/json
+
+Request:
+
+json Copy code { "status": "done" } Response:
+
+json Copy code { "id": "64fabc87a67dccea2c5e9a3b", "title": "Complete project", "description": "Finish the API by Friday", "status": "done", "userId": "64f97e87a67dccea2c5e9a3a", "createdAt": "2025-10-23T05:30:00.000Z" }
+
+Delete a Task
+Endpoint: /api/tasks/:id Method: DELETE Headers: Authorization: Bearer <access_token> Produces: application/json
+
+Response:
+
+json Copy code { "message": "Task deleted successfully" }
+
+Testing
+Use Postman or any API client to test the endpoints.
+
+Register or login to get access and refresh tokens.
+
+Use the access token in the Authorization header for protected routes.
+
+Use the refresh token with /api/auth/refresh-token to get new access tokens.
+
+Test task creation, retrieval, updates, and deletion.
+
+License
+MIT License
+
+Contact
+Created by John Chinedu Egeonu – feel free to reach out for questions or collaboration!

@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const { generateToken } = require('../utils/jwt.util');
+const { generateAccessToken, generateRefreshToken } = require('../utils/jwt.util');
 
 class AuthService {
   static async register(data) {
@@ -11,9 +11,10 @@ class AuthService {
     }
 
     const user = await User.create({ name, email, password });
-    const token = generateToken(user._id);
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
 
-    return { user, token };
+    return { user, accessToken, refreshToken };
   }
 
   static async login(data) {
@@ -25,8 +26,10 @@ class AuthService {
     const isMatch = await user.matchPassword(password);
     if (!isMatch) throw new Error('Invalid credentials');
 
-    const token = generateToken(user._id);
-    return { user, token };
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    return { user, accessToken, refreshToken };
   }
 }
 
